@@ -1,5 +1,5 @@
 import sublime, sublime_plugin
-import os
+import os, subprocess, sys
 
 class Utility:
     def filematch(filenetry, names):
@@ -9,20 +9,38 @@ class Utility:
             if filepath.find(n) < 0:
                 return False
         return True
+
+    def progOpenfile(filepath):
+        if sys.platform.startswith('darwin'):
+            subprocess.call(('open', filepath))
+        elif os.name == 'nt':
+            os.startfile(filepath)
+        elif os.name == 'posix':
+            subprocess.call(('xdg-open', filepath))
+
     def openfile(filepath):
+        binfiles = SettingSingleton.getInstance().get("binary_files")
+        for ext in binfiles:
+            extstr = '.' + ext
+            if filepath[ - len(extstr):] == extstr:
+                Utility.progOpenfile(filepath)
+                return
         sublime.active_window().open_file(filepath)
+
+class SettingSingleton:
+    settings = sublime.load_settings('Filefinder.sublime-settings')
+
+    def getInstance():
+        return SettingSingleton.settings
 
 class Filefinder:
     def __init__(self):
-        '''
-        Hard coded config
-        '''
-        self.incdir=['~/Dropbox/1Reading', '~/Dropbox/2Writing', '~/Dropbox/ItriProjects', '~/Dropbox/ITRI']
+        self.incdirs = SettingSingleton.getInstance().get("include_dirs")
         self.filelist=[]
 
     def initFileList(self):
         self.filelist = []
-        for root in self.incdir:
+        for root in self.incdirs:
             home = os.getenv('HOME')
             root = root.replace('~', home)
             for curdir, sondirs, sonfiles in os.walk(root):
