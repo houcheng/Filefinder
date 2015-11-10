@@ -36,6 +36,7 @@ class SettingSingleton:
 class Filefinder:
     def __init__(self):
         self.incdirs = SettingSingleton.getInstance().get("include_dirs")
+        print(self.incdirs)
         self.filelist=[]
 
     def initFileList(self):
@@ -70,12 +71,12 @@ class FilefinderSingleton:
 
 class FilefinderCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        self.v = self.view.window().show_input_panel("file search phrases:",'', self.on_done,
-            self.on_change, self.on_cancel)
         FilefinderSingleton.getInstance().initFileList()
         self.updateFileCount()
+        self.v = self.view.window().show_input_panel("file search phrases:",'', self.on_done,
+            self.on_change, self.on_cancel)
     def updateFileCount(self):
-        l = len( FilefinderSingleton.getInstance().found)
+        l = len( FilefinderSingleton.getInstance().getFound())
         sublime.status_message("matching files:%d" % l)
     def on_done(self, user_input):
         self.view.window().show_quick_panel(FilefinderSingleton.getInstance().found,
