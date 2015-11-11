@@ -1,0 +1,1 @@
+{"description": "File finder for SublimeText", "dependencies": [], "platforms": ["*"], "url": "https://github.com/houcheng/filefinder", "version": "1.0.0", "sublime_text": ">=3000"}
