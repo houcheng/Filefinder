@@ -1,6 +1,9 @@
 import sublime, sublime_plugin
 import os, subprocess, sys
 
+'''
+
+'''
 class Utility:
     def filematch(filenetry, names):
         (d, f) = filenetry
@@ -36,6 +39,8 @@ class SettingSingleton:
 class Filefinder:
     def __init__(self):
         self.incdirs = SettingSingleton.getInstance().get("include_dirs")
+        if self.incdirs == None:
+            self.incdirs = []
         print(self.incdirs)
         self.filelist=[]
 
@@ -62,6 +67,8 @@ class Filefinder:
     def getFound(self):
         return self.found
     def getCount(self):
+        if len(self.incdirs) == 0:
+            raise Exception("Please configure include_dirs in settings!")
         return len(self.found)
 
 class FilefinderSingleton:
@@ -76,8 +83,10 @@ class FilefinderCommand(sublime_plugin.TextCommand):
         self.v = self.view.window().show_input_panel("file search phrases:",'', self.on_done,
             self.on_change, self.on_cancel)
     def updateFileCount(self):
-        l = len( FilefinderSingleton.getInstance().getFound())
-        sublime.status_message("matching files:%d" % l)
+        try:
+            sublime.status_message("matching files:%d" % FilefinderSingleton.getInstance().getCount())
+        except Exception as err:
+            sublime.status_message(str(err))
     def on_done(self, user_input):
         self.view.window().show_quick_panel(FilefinderSingleton.getInstance().found,
             self.on_select_done, sublime.MONOSPACE_FONT, )
