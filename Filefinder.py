@@ -30,10 +30,16 @@ class Utility:
                 return
         sublime.active_window().open_file(filepath)
 
+'''
+should load lazily or load on plugin reload. Got problem if directly load
+on class initialization.
+'''
 class SettingSingleton:
-    settings = sublime.load_settings('Filefinder.sublime-settings')
+    settings = None
 
     def getInstance():
+        if SettingSingleton.settings == None:
+            SettingSingleton.settings = sublime.load_settings('Filefinder.sublime-settings')
         return SettingSingleton.settings
 
 class Filefinder:
@@ -41,7 +47,6 @@ class Filefinder:
         self.incdirs = SettingSingleton.getInstance().get("include_dirs")
         if self.incdirs == None:
             self.incdirs = []
-        print(self.incdirs)
         self.filelist=[]
 
     def initFileList(self):
@@ -70,10 +75,15 @@ class Filefinder:
         if len(self.incdirs) == 0:
             raise Exception("Please configure include_dirs in settings!")
         return len(self.found)
-
+'''
+should load lazily or load on plugin reload. Got problem if directly load
+on class initialization.
+'''
 class FilefinderSingleton:
-    filefinder = Filefinder()
+    filefinder = None
     def getInstance():
+        if FilefinderSingleton.filefinder == None:
+            FilefinderSingleton.filefinder = Filefinder()
         return FilefinderSingleton.filefinder
 
 class FilefinderCommand(sublime_plugin.TextCommand):
