@@ -2,8 +2,10 @@
 // overrides the settings in here.
 {
     // directories to be included in filefinder search.
-    // "include_dirs": ["~/Dropbox/1Reading", "~/Dropbox/2Writing", "~/Dropbox/0ItriProjects", "~/Dropbox/ITRI"],
     "include_dirs": ["~/Documents", "~/Desktop"],
+    // For Windows, your setting should be:
+    // "include_dirs": ["C:\\Users\\YOUR-USER-NAME\\Documents"],
+
     // files open by other applications
     "binary_files": ["ppt", "doc", "xls", "pdf", "docx", "pptx", "odp"],
 }

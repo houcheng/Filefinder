@@ -53,7 +53,8 @@ class Filefinder:
         self.filelist = []
         for root in self.incdirs:
             home = os.getenv('HOME')
-            root = root.replace('~', home)
+            if home != None:
+                root = root.replace('~', home)
             for curdir, sondirs, sonfiles in os.walk(root):
                 for f in sonfiles:
                     self.filelist.append( (curdir, f) )
