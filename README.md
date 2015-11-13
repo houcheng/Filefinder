@@ -24,10 +24,13 @@ A prompt file finder utility for sublime. You should:
   { "command": "filefinder", "keys": ["ctrl+t"] },
 ```
 
-- Default search directory
+- Default settings
 
 ```
+// search path
 "include_dirs": ["~/Documents", "~/Desktop"],
+// files open by system applications
+"binary_files": ["ppt", "doc", "xls", "pdf", "docx", "pptx", "odp"],
 ```
 
 - In windows environment, your search path may looks like this:
