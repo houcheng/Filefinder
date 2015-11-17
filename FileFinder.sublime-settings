@@ -7,5 +7,5 @@
     // "include_dirs": ["C:\\Users\\YOUR-USER-NAME\\Documents"],
 
     // files open by other applications
-    "binary_files": ["ppt", "doc", "xls", "pdf", "docx", "pptx", "odp"],
+    "binary_files": ["ppt", "doc", "xls", "pdf", "docx", "pptx", "odp"]
 }

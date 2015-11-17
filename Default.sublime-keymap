@@ -1,4 +1,4 @@
 [
     // hot key to trigger file finder
-    { "command": "filefinder", "keys": ["ctrl+t"] },
+    { "command": "filefinder", "keys": ["ctrl+t"] }
 ]

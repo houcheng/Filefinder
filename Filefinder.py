@@ -5,6 +5,7 @@ import os, subprocess, sys
 
 '''
 class Utility:
+    @staticmethod
     def filematch(filenetry, names):
         (d, f) = filenetry
         for n in names:
@@ -13,6 +14,7 @@ class Utility:
                 return False
         return True
 
+    @staticmethod
     def progOpenfile(filepath):
         if sys.platform.startswith('darwin'):
             subprocess.call(('open', filepath))
@@ -21,6 +23,7 @@ class Utility:
         elif os.name == 'posix':
             subprocess.call(('xdg-open', filepath))
 
+    @staticmethod
     def openfile(filepath):
         binfiles = SettingSingleton.getInstance().get("binary_files")
         for ext in binfiles:
@@ -37,6 +40,7 @@ on class initialization.
 class SettingSingleton:
     settings = None
 
+    @staticmethod
     def getInstance():
         if SettingSingleton.settings == None:
             SettingSingleton.settings = sublime.load_settings('FileFinder.sublime-settings')
@@ -82,6 +86,8 @@ on class initialization.
 '''
 class FilefinderSingleton:
     filefinder = None
+
+    @staticmethod
     def getInstance():
         if FilefinderSingleton.filefinder == None:
             FilefinderSingleton.filefinder = Filefinder()
