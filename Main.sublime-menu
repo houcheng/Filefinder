@@ -28,7 +28,7 @@
                             {
                                 "command": "open_file", "args":
                                 {
-                                    "file": "${packages}/Filefinder/Filefinder.sublime-settings"
+                                    "file": "${packages}/FileFinder/Filefinder.sublime-settings"
                                 },
                                 "caption": "Settings – Default"
                             },
