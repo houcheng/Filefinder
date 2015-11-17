@@ -39,7 +39,7 @@ class SettingSingleton:
 
     def getInstance():
         if SettingSingleton.settings == None:
-            SettingSingleton.settings = sublime.load_settings('Filefinder.sublime-settings')
+            SettingSingleton.settings = sublime.load_settings('FileFinder.sublime-settings')
         return SettingSingleton.settings
 
 class Filefinder:
