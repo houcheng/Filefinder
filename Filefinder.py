@@ -106,13 +106,15 @@ class FilefinderCommand(sublime_plugin.TextCommand):
 
     def updateFileCount(self):
         try:
-            sublime.status_message("matching files:%d" % FilefinderSingleton.getInstance().getCount())
+            msg = "Matching files: %d\n" % FilefinderSingleton.getInstance().getCount()
+            self.view.set_status('flefinder', msg)
         except Exception as err:
             sublime.status_message(str(err))
 
     def on_done(self, user_input):
         self.view.window().show_quick_panel(FilefinderSingleton.getInstance().found,
             self.on_select_done, sublime.MONOSPACE_FONT, )
+        self.view.erase_status('flefinder')
 
     def on_change(self, user_input):
         self.user_input = user_input
@@ -120,6 +122,7 @@ class FilefinderCommand(sublime_plugin.TextCommand):
         self.updateFileCount()
 
     def on_cancel(self):
+        self.view.erase_status('flefinder')
         sublime.status_message("User cancel ")
 
     def on_select_done(self, sel):
