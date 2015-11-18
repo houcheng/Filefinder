@@ -95,24 +95,37 @@ class FilefinderSingleton:
 
 class FilefinderCommand(sublime_plugin.TextCommand):
     def run(self, edit):
+        self.user_input = ''
         FilefinderSingleton.getInstance().initFileList()
         self.updateFileCount()
-        self.v = self.view.window().show_input_panel("file search phrases:",'', self.on_done,
+        self.prompt_user_input()
+
+    def prompt_user_input(self):
+        self.v = self.view.window().show_input_panel("file search phrases:", self.user_input, self.on_done,
             self.on_change, self.on_cancel)
+
     def updateFileCount(self):
         try:
             sublime.status_message("matching files:%d" % FilefinderSingleton.getInstance().getCount())
         except Exception as err:
             sublime.status_message(str(err))
+
     def on_done(self, user_input):
         self.view.window().show_quick_panel(FilefinderSingleton.getInstance().found,
             self.on_select_done, sublime.MONOSPACE_FONT, )
+
     def on_change(self, user_input):
+        self.user_input = user_input
         FilefinderSingleton.getInstance().searchFile(user_input)
         self.updateFileCount()
+
     def on_cancel(self):
         sublime.status_message("User cancel ")
+
     def on_select_done(self, sel):
+        if sel == -1:
+            self.prompt_user_input()
+            return
         filepath = FilefinderSingleton.getInstance().getFound()[sel]
         sublime.status_message("open: %s" % filepath)
         Utility.openfile(filepath)
