@@ -1,5 +1,6 @@
 # Sublime Filefinder plugin
 
+![Demo](demo.gif "Demo of file finder plugin")
 
 ## Installation
 
